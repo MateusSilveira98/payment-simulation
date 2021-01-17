@@ -1,41 +1,27 @@
-<div class="user-list" *ngIf="!showTransactionModal">
-  <div class="user-card" *ngFor="let user of users | async">
-    <div class="image">
-      <img [src]="user.img" [alt]="user.name" />
-    </div>
-    <div class="datas">
-      <label class="label">
-        <span>Nome do usuário:</span> {{user.name}}
-      </label>
-      <label class="label">
-        <span>ID:</span> {{user.id}}
-      </label>
-      <label class="label">
-        <span>Username:</span> {{user.username}}
-      </label>
-    </div>
-    <div class="button">
-      <a class="button" (click)="openTransactionModal(user)">PAGAR</a>
-    </div>
-  </div>
-</div>
+<section class="section" *ngIf="!showTransactionModal">
+  <article class="container">
+    <app-user-card *ngFor="let user of users | async" [user]="user" (pay)="openTransactionModal($event)">
+    </app-user-card>
+  </article>
+</section>
+
 
 <div class="modal" *ngIf="showTransactionModal">
- <form [formGroup]="transactionForm" (ngSubmit)="sendTransaction()">
-   <div class="field">
-     <label>Valor (R$): </label>
-     <input type="text" formControlName="value" class="input" />
-   </div>
-   <div class="field">
-    <label>Cartão: </label>
-    <select formControlName="card_number" class="select">
-      <option [value]="card.card_number" class="option" *ngFor="let card of cards">
-        {{card.card_number}}
-      </option>
-    </select>
-   </div>
-   <div class="field">
-     <input type="submit" value="Pagar"/>
-   </div>
- </form>
+  <form [formGroup]="transactionForm" (ngSubmit)="sendTransaction()">
+    <div class="field">
+      <label>Valor (R$): </label>
+      <input type="text" formControlName="value" class="input" />
+    </div>
+    <div class="field">
+      <label>Cartão: </label>
+      <select formControlName="card_number" class="select">
+        <option [value]="card.card_number" class="option" *ngFor="let card of cards">
+          {{card.card_number}}
+        </option>
+      </select>
+    </div>
+    <div class="field">
+      <input type="submit" value="Pagar" />
+    </div>
+  </form>
 </div>
