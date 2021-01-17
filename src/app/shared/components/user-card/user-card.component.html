@@ -1,0 +1,29 @@
+<mat-card>
+
+  <mat-card-content class="columns is-vcentered">
+    <div class="column is-10">
+      <div class="columns is-vcentered">
+        <div class="column is-2 is-flex is-justify-content-center">
+          <figure class="image is-128x128">
+            <img class="is-rounded" [src]="user.img" [alt]="user.name" />
+          </figure>
+        </div>
+        <div class="column">
+          <p>
+            <span class="label">Nome do usuário:</span> {{user.name}}
+          </p>
+          <p>
+            <span class="label">ID:</span> {{user.id}}
+          </p>
+          <p>
+            <span class="label">Username:</span> {{user.username}}
+          </p>
+        </div>
+      </div>
+    </div>
+    <div class="column is-flex is-justify-content-center">
+      <button mat-raised-button color="primary" (click)="onClickPay(user)">PAGAR</button>
+    </div>
+  </mat-card-content>
+
+</mat-card>
