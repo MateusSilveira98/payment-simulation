@@ -1,7 +1,7 @@
 import { FormControlValidatorMessageService } from '../../services/form-control-validator-message.service';
 import { User } from './../../../core/domain/user/User.domain';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { TransactionForm } from 'src/app/core/domain/transaction/TransactionForm.domain';
 import { Card } from './../../../core/domain/card/Card.domain';
@@ -43,7 +43,7 @@ export class TransactionFormModalComponent implements OnInit {
     return lastFourNumbers;
   }
 
-  getErrorMessage(control: FormControl, formFieldName: string) {
+  getErrorMessage(control: AbstractControl, formFieldName: string) {
     return this.validatorMessageService.findError(control, formFieldName);
   }
 }
