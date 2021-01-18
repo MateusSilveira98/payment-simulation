@@ -1,27 +1,6 @@
-<section class="section" *ngIf="!showTransactionModal">
+<section class="section">
   <article class="container">
-    <app-user-card *ngFor="let user of users | async" [user]="user" (pay)="openTransactionModal($event)">
+    <app-user-card class="mb-4" *ngFor="let user of users | async" [user]="user" (pay)="openTransactionModal($event)">
     </app-user-card>
   </article>
 </section>
-
-
-<div class="modal" *ngIf="showTransactionModal">
-  <form [formGroup]="transactionForm" (ngSubmit)="sendTransaction()">
-    <div class="field">
-      <label>Valor (R$): </label>
-      <input type="text" formControlName="value" class="input" />
-    </div>
-    <div class="field">
-      <label>Cartão: </label>
-      <select formControlName="card_number" class="select">
-        <option [value]="card.card_number" class="option" *ngFor="let card of cards">
-          {{card.card_number}}
-        </option>
-      </select>
-    </div>
-    <div class="field">
-      <input type="submit" value="Pagar" />
-    </div>
-  </form>
-</div>
