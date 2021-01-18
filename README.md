@@ -1,27 +1,37 @@
 # PaymentSimulation
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.18.
+This project that simulates sending money to another person, by credit card
+
+## Stacks
+
+- `Angular CLI: 8.3.29`
+- `Node: 10.15.3`
+- `OS: win32 x64`
+- `Angular: 8.2.14`
+- `Angular Material: ^8.2.3` to components
+- `Bulma` to grid layout
+
+## Conventional Libs
+
+- `git-commit-msg-linter` to standardize commit messages
+- `config global git alias` to simplify git commands
+
+## Setup
+
+Run `npm i` for install all dependencies.
 
 ## Development server
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm start` for a dev server. Navigate to `http://localhost:4200/`.
 
-## Code scaffolding
+## Structure
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+1. `src/app/core`
+  - The folder where has services, domains, api urls, anything that can be shared to another project;
+2. `src/app/shared`
+  - The folder where has services, components, material components, constants, anything that can be shared in this project;
+3. `app.component.*`
+  - I decided to put the user list and transaction modal in app.component.* Because the project is small.
+4. `styles.scss`
+  - The global styles
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
