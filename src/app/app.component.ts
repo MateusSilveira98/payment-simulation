@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Transaction } from 'src/app/core/domain/transaction/Transaction.domain';
 import { User } from 'src/app/core/domain/user/User.domain';
 import { Card } from './core/domain/card/Card.domain';
+import { TransactionForm } from './core/domain/transaction/TransactionForm.domain';
 import { TransactionPayload } from './core/domain/transaction/TransactionPayload.domain';
+import { TransactionFormModalComponent } from './shared/components/transaction-form-modal/transaction-form-modal.component';
 import { TransactionService } from './shared/services/transaction/transaction.service';
 import { UserService } from './shared/services/user/user.service';
 
@@ -31,34 +33,43 @@ export class AppComponent implements OnInit {
 
   users: Observable<User[]>;
 
-  showTransactionModal = false;
-
   selectedUser: User;
-
-  transactionForm: FormGroup;
 
   constructor(
     private userService: UserService,
     private transactionService: TransactionService,
-    private formBuilder: FormBuilder
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
     this.users = this.userService.listUsers();
+  }
 
-    this.transactionForm = this.formBuilder.group({
-      value: [null],
-      card_number: [null],
+  openTransactionModal(user: User): void {
+    this.selectedUser = user;
+
+    const modalConfig: MatDialogConfig = {
+      hasBackdrop: true,
+      data: {
+        cards: this.cards,
+        user,
+      },
+    };
+
+    const dialogRef = this.dialog.open(
+      TransactionFormModalComponent,
+      modalConfig
+    );
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (!!result) {
+        this.sendTransaction(result);
+      }
     });
   }
 
-  openTransactionModal(user: User) {
-    this.showTransactionModal = true;
-    this.selectedUser = user;
-  }
-
-  sendTransaction() {
-    const { value, card_number } = this.transactionForm.value;
+  sendTransaction(transactionFormValue: TransactionForm): void {
+    const { value, card_number } = transactionFormValue;
 
     const card = this.cards.find((item) => item.card_number === card_number);
 
