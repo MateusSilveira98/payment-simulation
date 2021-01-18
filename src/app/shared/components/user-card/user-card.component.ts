@@ -10,7 +10,7 @@ export class UserCardComponent implements OnInit {
 
   @Input() user: User;
 
-  @Output() pay: EventEmitter<any> = new EventEmitter();
+  @Output() pay: EventEmitter<User> = new EventEmitter();
 
   constructor() { }
 
