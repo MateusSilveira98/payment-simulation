@@ -34,7 +34,7 @@ export class TransactionFormModalComponent implements OnInit {
 
   onSubmit() {
     if (this.transactionForm.valid) {
-      this.dialogRef.close(this.data);
+      this.dialogRef.close(this.transactionForm.value);
     }
   }
 

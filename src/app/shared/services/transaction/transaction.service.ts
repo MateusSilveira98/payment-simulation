@@ -24,7 +24,7 @@ export class TransactionService {
   ): Observable<Transaction> {
     return this.http
       .post<TransactionAPIResult | TransactionPayload>(
-        this.endpoints.post,
+        `${this.endpoints.post}/${transactionPayload.destination_user_id}`,
         transactionPayload
       )
       .pipe(

@@ -70,7 +70,6 @@ export class AppComponent implements OnInit {
 
   sendTransaction(transactionFormValue: TransactionForm): void {
     const { value, card_number } = transactionFormValue;
-
     const card = this.cards.find((item) => item.card_number === card_number);
 
     const payload: TransactionPayload = {
