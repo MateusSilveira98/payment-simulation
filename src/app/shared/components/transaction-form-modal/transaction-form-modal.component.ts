@@ -1,10 +1,21 @@
-import { FormControlValidatorMessageService } from '../../services/form-control-validator-message.service';
-import { User } from './../../../core/domain/user/User.domain';
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, FormControl, AbstractControl } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { TransactionForm } from 'src/app/core/domain/transaction/TransactionForm.domain';
+import { FormControlValidatorMessageService } from '../../services/form-control-validator-message.service';
 import { Card } from './../../../core/domain/card/Card.domain';
+import { User } from './../../../core/domain/user/User.domain';
+
+export interface TransactionForm {
+  user: User;
+  cards: Card[];
+  value: string | number;
+  card_number: string;
+}
 
 @Component({
   selector: 'app-transaction-form-modal',
@@ -39,7 +50,10 @@ export class TransactionFormModalComponent implements OnInit {
   }
 
   getLastFourNumbers(cardNumber: string): string {
-    const lastFourNumbers = cardNumber.slice(cardNumber.length - 5, cardNumber.length - 1);
+    const lastFourNumbers = cardNumber.slice(
+      cardNumber.length - 5,
+      cardNumber.length - 1
+    );
     return lastFourNumbers;
   }
 

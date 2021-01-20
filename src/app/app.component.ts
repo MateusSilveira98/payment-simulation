@@ -6,10 +6,12 @@ import { Observable } from 'rxjs';
 import { Transaction } from 'src/app/core/domain/transaction/Transaction.domain';
 import { User } from 'src/app/core/domain/user/User.domain';
 import { Card } from './core/domain/card/Card.domain';
-import { TransactionForm } from './core/domain/transaction/TransactionForm.domain';
 import { TransactionPayload } from './core/domain/transaction/TransactionPayload.domain';
 import { ResponseStatusMessage } from './core/enums/ResponseStatusMessage.enum';
-import { TransactionFormModalComponent } from './shared/components/transaction-form-modal/transaction-form-modal.component';
+import {
+  TransactionForm,
+  TransactionFormModalComponent,
+} from './shared/components/transaction-form-modal/transaction-form-modal.component';
 import { TransactionService } from './shared/services/transaction/transaction.service';
 import { UserService } from './shared/services/user/user.service';
 
@@ -82,7 +84,7 @@ export class AppComponent implements OnInit {
 
     const payload: TransactionPayload = {
       card,
-      value,
+      value: +value,
       destination_user_id: this.selectedUser.id,
     };
 
