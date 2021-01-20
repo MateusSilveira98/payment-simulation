@@ -1,6 +1,6 @@
-import { ResponseStatusMessage } from './core/enums/ResponseStatusMessage.enum';
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
+import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
 import { Transaction } from 'src/app/core/domain/transaction/Transaction.domain';
@@ -8,14 +8,10 @@ import { User } from 'src/app/core/domain/user/User.domain';
 import { Card } from './core/domain/card/Card.domain';
 import { TransactionForm } from './core/domain/transaction/TransactionForm.domain';
 import { TransactionPayload } from './core/domain/transaction/TransactionPayload.domain';
+import { ResponseStatusMessage } from './core/enums/ResponseStatusMessage.enum';
 import { TransactionFormModalComponent } from './shared/components/transaction-form-modal/transaction-form-modal.component';
 import { TransactionService } from './shared/services/transaction/transaction.service';
 import { UserService } from './shared/services/user/user.service';
-import {
-  MatSnackBar,
-  MatSnackBarConfig,
-  MatSnackBarVerticalPosition,
-} from '@angular/material';
 
 @Component({
   selector: 'app-root',
@@ -92,11 +88,12 @@ export class AppComponent implements OnInit {
 
     const snackBarConfig: MatSnackBarConfig = {
       duration: 3000,
-      verticalPosition: 'top'
+      verticalPosition: 'top',
     };
 
     this.transactionService.postTransaction(payload).subscribe(
       (transaction: Transaction) => {
+        transaction.destination_user = this.selectedUser;
         this.snackBar.open(
           `${transaction.destination_user.name} foi pago com sucesso`,
           'fechar',
