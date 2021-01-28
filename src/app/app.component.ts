@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
     },
   ];
 
-  users: Observable<User[]>;
+  users$: Observable<User[]>;
 
   selectedUser: User;
 
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.users = this.userService.listUsers();
+    this.users$ = this.userService.listUsers();
   }
 
   openTransactionModal(

@@ -1,35 +1,68 @@
-import { TestBed, async } from '@angular/core/testing';
-import { RouterTestingModule } from '@angular/router/testing';
+import { TransactionService } from './shared/services/transaction/transaction.service';
+import { UserService } from './shared/services/user/user.service';
+import { DebugElement } from '@angular/core';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { AppModule } from './app.module';
+import { MatDialog, MatSnackBar } from '@angular/material';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let element: DebugElement;
+
+  let userService: any;
+  let transactionService: any;
+  let dialog: any;
+  let snackBar: any;
+
   beforeEach(async(() => {
+    const userServiceSpy = jasmine.createSpyObj('UserService', ['listUsers']);
+    const transactionServiceSpy = jasmine.createSpyObj('TransactionService', [
+      'postTransaction',
+    ]);
+    const dialogSpy = jasmine.createSpyObj('MatDialog', [
+      'open',
+      'afterClosed',
+    ]);
+    const snackBarSpy = jasmine.createSpyObj('MatSnackBar', [
+      'open',
+      'afterDismissed',
+    ]);
     TestBed.configureTestingModule({
-      imports: [
-        RouterTestingModule
+      imports: [AppModule],
+      providers: [
+        { provide: UserService, useValue: userServiceSpy },
+        { provide: TransactionService, useValue: transactionServiceSpy },
+        { provide: MatDialog, useValue: dialogSpy },
+        { provide: MatSnackBar, useValue: snackBarSpy },
       ],
-      declarations: [
-        AppComponent
-      ],
-    }).compileComponents();
+    })
+      .compileComponents()
+      .then(() => {
+        fixture = TestBed.createComponent(AppComponent);
+        component = fixture.componentInstance;
+        element = fixture.debugElement;
+        userService = TestBed.get(UserService);
+        transactionService = TestBed.get(TransactionService);
+        dialog = TestBed.get(MatDialog);
+        snackBar = TestBed.get(MatSnackBar);
+      });
   }));
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app).toBeTruthy();
+    expect(component).toBeTruthy();
   });
 
-  it(`should have as title 'payment-simulation'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('payment-simulation');
+  it('should list users', () => {
+    pending();
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('payment-simulation app is running!');
+  it('should open modal transaction modal', () => {
+    pending();
+  });
+
+  it('should send transaction', () => {
+    pending();
   });
 });

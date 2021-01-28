@@ -1,3 +1,4 @@
+import { SharedModule } from './../../shared.module';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { UserCardComponent } from './user-card.component';
@@ -8,16 +9,13 @@ describe('UserCardComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserCardComponent ]
+      imports: [ SharedModule ]
     })
-    .compileComponents();
+    .compileComponents().then(() => {
+      fixture = TestBed.createComponent(UserCardComponent);
+      component = fixture.componentInstance;
+    });
   }));
-
-  beforeEach(() => {
-    fixture = TestBed.createComponent(UserCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
   it('should create', () => {
     expect(component).toBeTruthy();

@@ -1,6 +1,6 @@
 <section class="section">
   <article class="container">
-    <app-user-card class="mb-4" *ngFor="let user of users | async" [user]="user" (pay)="openTransactionModal($event)">
+    <app-user-card class="mb-4" *ngFor="let user of users$ | async" [user]="user" (pay)="openTransactionModal($event)">
     </app-user-card>
   </article>
 </section>
