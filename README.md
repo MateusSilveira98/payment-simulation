@@ -24,6 +24,10 @@ Run `npm i` for install all dependencies.
 
 Run `npm start` for a dev server. Navigate to `http://localhost:4200/`.
 
+## Unit tests
+
+Run `npm run test`.
+
 ## Structure
 
 1. `src/app/core`
