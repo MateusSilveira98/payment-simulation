@@ -6,7 +6,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormControlValidatorMessageService } from '../../services/form-control-validator-message.service';
+import { FormControlValidatorService } from '../../services/form-control-validator/form-control-validator.service';
 import { Card } from './../../../core/domain/card/Card.domain';
 import { User } from './../../../core/domain/user/User.domain';
 
@@ -29,7 +29,7 @@ export class TransactionFormModalComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private validatorMessageService: FormControlValidatorMessageService,
+    private validatorService: FormControlValidatorService,
     public dialogRef: MatDialogRef<TransactionFormModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: TransactionForm
   ) {}
@@ -58,6 +58,6 @@ export class TransactionFormModalComponent implements OnInit {
   }
 
   getErrorMessage(control: AbstractControl, formFieldName: string) {
-    return this.validatorMessageService.findError(control, formFieldName);
+    return this.validatorService.findError(control, formFieldName);
   }
 }
