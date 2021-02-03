@@ -4,7 +4,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { FormBuilder } from '@angular/forms';
 import { MatDialogRef } from '@angular/material';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormControlValidatorMessageService } from './../../services/form-control-validator-message.service';
+import { FormControlValidatorService } from '../../services/form-control-validator/form-control-validator.service';
 import { SharedModule } from './../../shared.module';
 import {
   TransactionForm,
@@ -58,7 +58,7 @@ describe('TransactionFormModalComponent', () => {
       providers: [
         { provide: FormBuilder, useValue: formBuilderSpy },
         {
-          provide: FormControlValidatorMessageService,
+          provide: FormControlValidatorService,
           useValue: validatorMessageServiceSpy,
         },
         { provide: MatDialogRef, useValue: dialogRefSpy },
@@ -72,7 +72,7 @@ describe('TransactionFormModalComponent', () => {
         element = fixture.debugElement;
         formBuilder = TestBed.get(FormBuilder);
         validatorMessageService = TestBed.get(
-          FormControlValidatorMessageService
+          FormControlValidatorService
         );
         dialogRef = TestBed.get(MatDialogRef);
       });
