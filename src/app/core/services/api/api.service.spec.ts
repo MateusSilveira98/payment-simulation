@@ -1,12 +1,9 @@
-import { ResponseStatusMessage } from './../../enums/ResponseStatusMessage.enum';
-import { User } from './../../domain/user/User.domain';
 import {
   HttpClientTestingModule,
-  HttpTestingController,
+  HttpTestingController
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { ApiService } from 'src/app/core/services/api/api.service';
-import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 describe('ApiService', () => {
   let apiService: ApiService;
