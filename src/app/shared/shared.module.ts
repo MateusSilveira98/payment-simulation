@@ -1,4 +1,5 @@
-import { FormControlValidatorMessageService } from './services/form-control-validator-message.service';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormControlValidatorService } from './services/form-control-validator/form-control-validator.service';
 import { UserService } from './services/user/user.service';
 import { TransactionService } from './services/transaction/transaction.service';
 import { NgModule } from '@angular/core';
@@ -8,6 +9,7 @@ import { MaterialModule } from './material/material.module';
 @NgModule({
   declarations: [],
   imports: [
+    BrowserAnimationsModule,
     MaterialModule,
     ComponentsModule
   ],
@@ -18,7 +20,7 @@ import { MaterialModule } from './material/material.module';
   providers: [
     TransactionService,
     UserService,
-    FormControlValidatorMessageService
+    FormControlValidatorService
   ]
 })
 export class SharedModule {}
