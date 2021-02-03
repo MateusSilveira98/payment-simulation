@@ -1,4 +1,4 @@
-import { ApiService } from 'src/app/core/services/api.service';
+import { ApiService } from 'src/app/core/services/api/api.service';
 import { TransactionPayload } from 'src/app/core/domain/transaction/TransactionPayload.domain';
 import { Injectable } from '@angular/core';
 
@@ -17,12 +17,12 @@ export class TransactionService {
     post: '5d542ec72f000048248614b3',
   };
 
-  constructor(public http: ApiService) {}
+  constructor(private apiService: ApiService) {}
 
   postTransaction(
     transactionPayload: TransactionPayload
   ): Observable<Transaction> {
-    return this.http
+    return this.apiService
       .post<TransactionAPIResult | TransactionPayload>(
         `${this.endpoints.post}/${transactionPayload.destination_user_id}`,
         transactionPayload
