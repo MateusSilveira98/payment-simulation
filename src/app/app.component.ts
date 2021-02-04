@@ -10,7 +10,7 @@ import { TransactionPayload } from './core/domain/transaction/TransactionPayload
 import { ResponseStatusMessage } from './core/enums/ResponseStatusMessage.enum';
 import {
   TransactionForm,
-  TransactionFormModalComponent,
+  TransactionFormModalComponent
 } from './shared/components/transaction-form-modal/transaction-form-modal.component';
 import { TransactionService } from './shared/services/transaction/transaction.service';
 import { UserService } from './shared/services/user/user.service';
@@ -22,13 +22,11 @@ import { UserService } from './shared/services/user/user.service';
 })
 export class AppComponent implements OnInit {
   cards: Card[] = [
-    // valid card
     {
       card_number: '1111111111111111',
       cvv: 789,
       expiry_date: '01/18',
     },
-    // invalid card
     {
       card_number: '4111111111111234',
       cvv: 123,

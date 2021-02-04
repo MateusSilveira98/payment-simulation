@@ -1,52 +1,39 @@
-import { TransactionService } from './shared/services/transaction/transaction.service';
-import { UserService } from './shared/services/user/user.service';
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { By } from '@angular/platform-browser';
+import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
-import { MatDialog, MatSnackBar } from '@angular/material';
+import { MOCK_USERS } from './shared/mocks/user/user.mock';
+import { TransactionService } from './shared/services/transaction/transaction.service';
+import { UserService } from './shared/services/user/user.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
-  let element: DebugElement;
+  let debugElement: DebugElement;
 
-  let userService: any;
-  let transactionService: any;
-  let dialog: any;
-  let snackBar: any;
+  let userServiceSpy: jasmine.SpyObj<UserService>;
+  let transactionServiceSpy: jasmine.SpyObj<TransactionService>;
 
   beforeEach(async(() => {
-    const userServiceSpy = jasmine.createSpyObj('UserService', ['listUsers']);
-    const transactionServiceSpy = jasmine.createSpyObj('TransactionService', [
+    userServiceSpy = jasmine.createSpyObj('UserService', ['listUsers']);
+    transactionServiceSpy = jasmine.createSpyObj('TransactionService', [
       'postTransaction',
     ]);
-    const dialogSpy = jasmine.createSpyObj('MatDialog', [
-      'open',
-      'afterClosed',
-    ]);
-    const snackBarSpy = jasmine.createSpyObj('MatSnackBar', [
-      'open',
-      'afterDismissed',
-    ]);
+
     TestBed.configureTestingModule({
       imports: [AppModule],
       providers: [
         { provide: UserService, useValue: userServiceSpy },
-        { provide: TransactionService, useValue: transactionServiceSpy },
-        { provide: MatDialog, useValue: dialogSpy },
-        { provide: MatSnackBar, useValue: snackBarSpy },
+        { provide: TransactionService, useValue: transactionServiceSpy }
       ],
     })
       .compileComponents()
       .then(() => {
         fixture = TestBed.createComponent(AppComponent);
         component = fixture.componentInstance;
-        element = fixture.debugElement;
-        userService = TestBed.get(UserService);
-        transactionService = TestBed.get(TransactionService);
-        dialog = TestBed.get(MatDialog);
-        snackBar = TestBed.get(MatSnackBar);
+        debugElement = fixture.debugElement;
       });
   }));
 
@@ -55,14 +42,11 @@ describe('AppComponent', () => {
   });
 
   it('should list users', () => {
-    pending();
-  });
+    userServiceSpy.listUsers.and.returnValue(of(MOCK_USERS));
+    fixture.detectChanges();
 
-  it('should open modal transaction modal', () => {
-    pending();
-  });
+    const appUserCardList = debugElement.queryAll(By.css('app-user-card'));
 
-  it('should send transaction', () => {
-    pending();
+    expect(appUserCardList.length).toBe(10);
   });
 });
