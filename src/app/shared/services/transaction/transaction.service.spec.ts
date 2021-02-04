@@ -1,4 +1,5 @@
-import { MOCK_TRANSACTION, MOCK_PAYLOAD } from '../../mocks/transaction/transaction.mock';
+import { MOCK_TRANSACTION_API_RESULT } from './../../mocks/transaction/transaction.mock';
+import { MOCK_TRANSACTION_PAYLOAD } from '../../mocks/transaction/transaction.mock';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api/api.service';
@@ -22,11 +23,11 @@ describe('TransactionService', () => {
   });
 
   it('should send post transaction', () => {
-    apiServiceSpy.post.and.returnValue(of(MOCK_TRANSACTION));
-    transactionService.postTransaction(MOCK_PAYLOAD).subscribe((transaction) => {
+    apiServiceSpy.post.and.returnValue(of(MOCK_TRANSACTION_API_RESULT));
+    transactionService.postTransaction(MOCK_TRANSACTION_PAYLOAD).subscribe((transaction) => {
       expect(transaction).toBeTruthy();
       expect(typeof transaction).toBe('object');
-      expect(transaction.destination_user.id).toEqual(MOCK_PAYLOAD.destination_user_id);
+      expect(transaction.destination_user.id).toEqual(MOCK_TRANSACTION_PAYLOAD.destination_user_id);
     });
   });
 });
