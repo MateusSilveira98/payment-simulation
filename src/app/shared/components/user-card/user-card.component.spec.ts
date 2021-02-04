@@ -1,4 +1,4 @@
-import { MOCK_USER } from './../../services/user/user.mock';
+import { MOCK_USER } from '../../mocks/user/user.mock';
 import { SharedModule } from './../../shared.module';
 import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';

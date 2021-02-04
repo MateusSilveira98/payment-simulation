@@ -14,7 +14,7 @@ import {
   TransactionForm,
   TransactionFormModalComponent
 } from './transaction-form-modal.component';
-import { MOCK_TRANSACTION_FORM_DATA } from './transaction-form.mock';
+import { MOCK_TRANSACTION_FORM_DATA } from '../../mocks/transaction/transaction-form.mock';
 
 describe('TransactionFormModalComponent', () => {
   let component: TransactionFormModalComponent;

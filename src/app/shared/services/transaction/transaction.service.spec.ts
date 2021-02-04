@@ -1,4 +1,4 @@
-import { MOCK_TRANSACTION, MOCK_PAYLOAD } from './transaction.mock';
+import { MOCK_TRANSACTION, MOCK_PAYLOAD } from '../../mocks/transaction/transaction.mock';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api/api.service';

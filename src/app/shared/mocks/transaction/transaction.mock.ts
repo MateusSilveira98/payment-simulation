@@ -1,5 +1,5 @@
-import { TransactionPayload } from './../../../core/domain/transaction/TransactionPayload.domain';
-import { TransactionAPIResult } from './transaction.service';
+import { TransactionPayload } from '../../../core/domain/transaction/TransactionPayload.domain';
+import { TransactionAPIResult } from '../../services/transaction/transaction.service';
 
 export const MOCK_PAYLOAD: TransactionPayload = {
   card: {

@@ -1,4 +1,4 @@
-import { User } from './../../../core/domain/user/User.domain';
+import { User } from '../../../core/domain/user/User.domain';
 
 let id = 0;
 const users = [];

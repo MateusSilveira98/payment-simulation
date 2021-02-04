@@ -1,7 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
 import { ApiService } from 'src/app/core/services/api/api.service';
-import { MOCK_USERS } from './user.mock';
+import { MOCK_USERS } from '../../mocks/user/user.mock';
 import { UserService } from './user.service';
 
 describe('UserService', () => {
