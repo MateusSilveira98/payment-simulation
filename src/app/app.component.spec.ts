@@ -1,12 +1,12 @@
 import { DebugElement } from '@angular/core';
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { MOCK_USERS } from '@shared/mocks/user/user.mock';
+import { TransactionService } from '@shared/services/transaction/transaction.service';
+import { UserService } from '@shared/services/user/user.service';
 import { of } from 'rxjs';
 import { AppComponent } from './app.component';
 import { AppModule } from './app.module';
-import { MOCK_USERS } from './shared/mocks/user/user.mock';
-import { TransactionService } from './shared/services/transaction/transaction.service';
-import { UserService } from './shared/services/user/user.service';
 
 describe('AppComponent', () => {
   let component: AppComponent;

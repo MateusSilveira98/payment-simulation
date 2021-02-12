@@ -1,5 +1,5 @@
-import { User } from './../../../core/domain/user/User.domain';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { User } from '@core/domain/user/User.domain';
 
 @Component({
   selector: 'app-user-card',
