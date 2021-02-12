@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
-import { FormValidatorMessage } from '../../enums/FormValidatorMessage.enum';
+import { FormValidatorMessage } from '@shared/enums/FormValidatorMessage.enum';
 
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class FormControlValidatorService {
   constructor() {}
 

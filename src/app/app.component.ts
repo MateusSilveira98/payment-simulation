@@ -1,19 +1,24 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar, MatSnackBarConfig } from '@angular/material';
+import {
+  MatSnackBar,
+  MatSnackBarConfig,
+  MatSnackBarRef,
+  SimpleSnackBar
+} from '@angular/material';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Observable } from 'rxjs';
-import { Transaction } from 'src/app/core/domain/transaction/Transaction.domain';
-import { User } from 'src/app/core/domain/user/User.domain';
-import { Card } from './core/domain/card/Card.domain';
-import { TransactionPayload } from './core/domain/transaction/TransactionPayload.domain';
-import { ResponseStatusMessage } from './core/enums/ResponseStatusMessage.enum';
+import { Card } from '@core/domain/card/Card.domain';
+import { Transaction } from '@core/domain/transaction/Transaction.domain';
+import { TransactionPayload } from '@core/domain/transaction/TransactionPayload.domain';
+import { User } from '@core/domain/user/User.domain';
+import { ResponseStatusMessage } from '@core/enums/ResponseStatusMessage.enum';
 import {
   TransactionForm,
   TransactionFormModalComponent
-} from './shared/components/transaction-form-modal/transaction-form-modal.component';
-import { TransactionService } from './shared/services/transaction/transaction.service';
-import { UserService } from './shared/services/user/user.service';
+} from '@shared/components/transaction-form-modal/transaction-form-modal.component';
+import { TransactionService } from '@shared/services/transaction/transaction.service';
+import { UserService } from '@shared/services/user/user.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -86,23 +91,16 @@ export class AppComponent implements OnInit {
       destination_user_id: this.selectedUser.id,
     };
 
-    const snackBarConfig: MatSnackBarConfig = {
-      duration: 3000,
-      verticalPosition: 'top',
-    };
-
     this.transactionService.postTransaction(payload).subscribe(
       (transaction: Transaction) => {
         transaction.destination_user = this.selectedUser;
-        this.snackBar.open(
+        this.showSnackBarMessage(
           `${transaction.destination_user.name} foi pago com sucesso`,
-          'fechar',
-          snackBarConfig
+          'fechar'
         );
       },
       (error: HttpErrorResponse) => {
-        this.snackBar
-          .open(ResponseStatusMessage[error.status], 'fechar', snackBarConfig)
+        this.showSnackBarMessage(ResponseStatusMessage[error.status], 'fechar')
           .afterDismissed()
           .subscribe(() => {
             this.openTransactionModal(this.selectedUser, {
@@ -112,5 +110,16 @@ export class AppComponent implements OnInit {
           });
       }
     );
+  }
+
+  showSnackBarMessage(
+    message: string,
+    actionName: string
+  ): MatSnackBarRef<SimpleSnackBar> {
+    const snackBarConfig: MatSnackBarConfig = {
+      duration: 3000,
+      verticalPosition: 'top',
+    };
+    return this.snackBar.open(message, actionName, snackBarConfig);
   }
 }

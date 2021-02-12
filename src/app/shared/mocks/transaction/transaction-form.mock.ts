@@ -1,5 +1,5 @@
-import { Card } from '../../../core/domain/card/Card.domain';
-import { TransactionForm } from '../../components/transaction-form-modal/transaction-form-modal.component';
+import { Card } from '@core/domain/card/Card.domain';
+import { TransactionForm } from '@shared/components/transaction-form-modal/transaction-form-modal.component';
 
 export const MOCK_TRANSACTION_FORM_CARDS: Card[] = [
   {

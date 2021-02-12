@@ -1,7 +1,7 @@
-import { AbstractControl, FormControl, Validators } from '@angular/forms';
-import { SharedModule } from './../../shared.module';
 import { TestBed } from '@angular/core/testing';
-import { FormValidatorMessage } from './../../enums/FormValidatorMessage.enum';
+import { AbstractControl, FormControl, Validators } from '@angular/forms';
+import { FormValidatorMessage } from '@shared/enums/FormValidatorMessage.enum';
+import { SharedModule } from '@shared/shared.module';
 import { FormControlValidatorService } from './form-control-validator.service';
 describe('FormControlValidatorService', () => {
   let formControlValidatorService: FormControlValidatorService;
@@ -72,6 +72,8 @@ describe('FormControlValidatorService', () => {
     );
 
     expect(message).toBeTruthy();
-    expect(message).toEqual(FormValidatorMessage.REQUIRED.replace('[FIELD]', 'Valor'));
+    expect(message).toEqual(
+      FormValidatorMessage.REQUIRED.replace('[FIELD]', 'Valor')
+    );
   });
 });

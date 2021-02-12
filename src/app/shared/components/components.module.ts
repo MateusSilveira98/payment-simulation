@@ -1,3 +1,4 @@
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { REAL_CURRENCY_MASK_CONFIG } from './../constants/CurrencyConfig.const';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -13,10 +14,11 @@ import { UserCardComponent } from './user-card/user-card.component';
   imports: [
     BrowserModule,
     FormsModule,
+    BrowserAnimationsModule,
     ReactiveFormsModule,
     NgxCurrencyModule.forRoot(REAL_CURRENCY_MASK_CONFIG),
     MaterialModule,
   ],
-  exports: [UserCardComponent, TransactionFormModalComponent],
+  exports: [UserCardComponent],
 })
 export class ComponentsModule {}

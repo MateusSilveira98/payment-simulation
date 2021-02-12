@@ -1,8 +1,7 @@
-import { MOCK_TRANSACTION_API_RESULT } from './../../mocks/transaction/transaction.mock';
-import { MOCK_TRANSACTION_PAYLOAD } from '../../mocks/transaction/transaction.mock';
 import { TestBed } from '@angular/core/testing';
+import { ApiService } from '@core/services/api/api.service';
+import { MOCK_TRANSACTION_API_RESULT, MOCK_TRANSACTION_PAYLOAD } from '@shared/mocks/transaction/transaction.mock';
 import { of } from 'rxjs';
-import { ApiService } from 'src/app/core/services/api/api.service';
 import {
   TransactionService
 } from './transaction.service';

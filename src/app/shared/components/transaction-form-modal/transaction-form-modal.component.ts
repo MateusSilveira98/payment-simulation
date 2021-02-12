@@ -3,12 +3,12 @@ import {
   AbstractControl,
   FormBuilder,
   FormGroup,
-  Validators,
+  Validators
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { FormControlValidatorService } from '../../services/form-control-validator/form-control-validator.service';
-import { Card } from './../../../core/domain/card/Card.domain';
-import { User } from './../../../core/domain/user/User.domain';
+import { Card } from '@core/domain/card/Card.domain';
+import { User } from '@core/domain/user/User.domain';
+import { FormControlValidatorService } from '@shared/services/form-control-validator/form-control-validator.service';
 
 export interface TransactionForm {
   user: User;
