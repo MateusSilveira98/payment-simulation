@@ -1,20 +1,22 @@
+import { TranslateService } from '@ngx-translate/core';
 import { DebugElement } from '@angular/core';
 import {
   async,
   ComponentFixture,
   fakeAsync,
-  TestBed
+  TestBed,
 } from '@angular/core/testing';
 import { MatDialogRef } from '@angular/material';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { By } from '@angular/platform-browser';
-import { FormControlValidatorService } from './../../services/form-control-validator/form-control-validator.service';
-import { SharedModule } from './../../shared.module';
+import { FormControlValidatorService } from '@core/services/form-control-validator/form-control-validator.service';
+import { MOCK_TRANSACTION_FORM_DATA } from '@shared/mocks/transaction/transaction-form.mock';
+import { SharedModule } from '@shared/shared.module';
 import {
   TransactionForm,
-  TransactionFormModalComponent
+  TransactionFormModalComponent,
 } from './transaction-form-modal.component';
-import { MOCK_TRANSACTION_FORM_DATA } from '../../mocks/transaction/transaction-form.mock';
+import { TRANSACTION_FORM_VOCABULARY } from './transaction-form-modal.component.vocabulary';
 
 describe('TransactionFormModalComponent', () => {
   let component: TransactionFormModalComponent;
@@ -23,17 +25,32 @@ describe('TransactionFormModalComponent', () => {
 
   let dialogRefSpy: jasmine.SpyObj<MatDialogRef<TransactionForm>>;
 
+  let translateService: TranslateService;
+
+  let formControlValidatorService: FormControlValidatorService;
+
+  const fieldPropNameValue = 'value';
+  const fieldPropNameCardNumber = 'card_number';
+  const fieldName = 'Valor';
+
   beforeEach(async(() => {
-    dialogRefSpy = jasmine.createSpyObj('MatDialogRef', ['close', 'afterClosed']);
+    dialogRefSpy = jasmine.createSpyObj('MatDialogRef', [
+      'close',
+      'afterClosed',
+    ]);
     TestBed.configureTestingModule({
       imports: [SharedModule],
       providers: [
+        TranslateService,
+        FormControlValidatorService,
         { provide: MatDialogRef, useValue: dialogRefSpy },
         { provide: MAT_DIALOG_DATA, useValue: MOCK_TRANSACTION_FORM_DATA },
       ],
     })
       .compileComponents()
       .then(() => {
+        translateService = TestBed.get(TranslateService);
+        formControlValidatorService = TestBed.get(FormControlValidatorService);
         fixture = TestBed.createComponent(TransactionFormModalComponent);
         component = fixture.componentInstance;
         debugElement = fixture.debugElement;
@@ -53,18 +70,20 @@ describe('TransactionFormModalComponent', () => {
   });
 
   it('should build form with datas on initialize the transaction form modal component', fakeAsync(() => {
-    expect(component.transactionForm.get('value')).toBeTruthy();
-    expect(component.transactionForm.get('card_number')).toBeTruthy();
+    expect(component.transactionForm.get(fieldPropNameValue)).toBeTruthy();
+    expect(component.transactionForm.get(fieldPropNameCardNumber)).toBeTruthy();
 
-    expect(component.transactionForm.get('value').value).toBe(
+    expect(component.transactionForm.get(fieldPropNameValue).value).toBe(
       MOCK_TRANSACTION_FORM_DATA.value
     );
-    expect(component.transactionForm.get('card_number').value).toBe(
+    expect(component.transactionForm.get(fieldPropNameCardNumber).value).toBe(
       MOCK_TRANSACTION_FORM_DATA.card_number
     );
 
     const inputValue = debugElement.queryAll(By.css('input'));
-    expect(inputValue[0].attributes.formControlName).toEqual('value');
+    expect(inputValue[0].attributes.formControlName).toEqual(
+      fieldPropNameValue
+    );
 
     expect(
       inputValue[0].nativeNode.value.replace('R$ ', '').replace(',', '.')
@@ -80,15 +99,17 @@ describe('TransactionFormModalComponent', () => {
     );
 
     expect(selectInputCardNumber[0].nativeElement.textContent).toContain(
-      `com final ${lastForNumbers}`
+      `${translateService.instant(
+        TRANSACTION_FORM_VOCABULARY.selectLabel
+      )} ${lastForNumbers}`
     );
   }));
 
   it('should retrive a message error on validate form fields', () => {
-    const formControlValidatorService = new FormControlValidatorService();
-
-    const valueControl = component.transactionForm.get('value');
-    const cardNumberControl = component.transactionForm.get('card_number');
+    const valueControl = component.transactionForm.get(fieldPropNameValue);
+    const cardNumberControl = component.transactionForm.get(
+      fieldPropNameCardNumber
+    );
 
     expect(valueControl).toBeTruthy();
     expect(valueControl.invalid).toBeTruthy();
@@ -96,9 +117,15 @@ describe('TransactionFormModalComponent', () => {
     expect(cardNumberControl).toBeTruthy();
     expect(cardNumberControl.valid).toBeTruthy();
 
-    const valueFieldMessage = component.getErrorMessage(valueControl, 'Valor');
+    const valueFieldMessage = component.getErrorMessage(
+      valueControl,
+      fieldName
+    );
     expect(valueFieldMessage).toContain(
-      formControlValidatorService.getMinLengthErrorMessage(valueControl.errors.min.min, 'Valor')
+      formControlValidatorService.getMinLengthErrorMessage(
+        valueControl.errors.min.min,
+        fieldName
+      )
     );
   });
 });

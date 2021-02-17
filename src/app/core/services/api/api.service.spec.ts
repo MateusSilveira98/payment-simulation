@@ -1,9 +1,10 @@
+import { CoreModule } from './../../core.module';
 import {
   HttpClientTestingModule,
-  HttpTestingController
+  HttpTestingController,
 } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
-import { ApiService } from 'src/app/core/services/api/api.service';
+import { ApiService } from '@core/services/api/api.service';
 
 describe('ApiService', () => {
   let apiService: ApiService;
@@ -20,28 +21,26 @@ describe('ApiService', () => {
 
   it('should send http get method', () => {
     apiService
-      .list<{}>('someUrl')
-      .subscribe((result) => expect(result).toEqual({}));
+      .list<[{ id: number }]>('someUrl')
+      .subscribe((result) => expect(result).toEqual([{ id: 1 }]));
 
     const request = httpTestingController.expectOne('someUrl');
 
     expect(request.request.method).toEqual('GET');
-    expect(request.request.body).toBe(null);
 
-    request.flush({});
+    request.flush([{ id: 1 }]);
   });
 
   it('should send http post method', () => {
     apiService
-      .post<{}>('someUrl', {})
-      .subscribe((result) => expect(result).toEqual({}));
+      .post<{ id: number } | { payload: { id: number } }>('someUrl', { id: 1 })
+      .subscribe((result) => expect(result).toEqual({ payload: { id: 1 } }));
 
     const request = httpTestingController.expectOne('someUrl');
 
     expect(request.request.method).toEqual('POST');
-    expect(request.request.body).toEqual({});
 
-    request.flush({});
+    request.flush({ payload: { id: 1 } });
   });
 
   afterEach(() => {

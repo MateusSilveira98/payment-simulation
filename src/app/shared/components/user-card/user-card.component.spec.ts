@@ -1,9 +1,9 @@
-import { MOCK_USER } from '../../mocks/user/user.mock';
-import { SharedModule } from './../../shared.module';
-import { async, ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { DebugElement } from '@angular/core';
-import { UserCardComponent } from './user-card.component';
+import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
+import { MOCK_USER } from '@shared/mocks/user/user.mock';
+import { SharedModule } from '@shared/shared.module';
+import { UserCardComponent } from './user-card.component';
 
 describe('UserCardComponent', () => {
   let component: UserCardComponent;
@@ -38,6 +38,18 @@ describe('UserCardComponent', () => {
 
     expect(labelsValue[0].nativeElement.textContent).toContain(MOCK_USER.name);
     expect(labelsValue[1].nativeElement.textContent).toContain(MOCK_USER.id);
-    expect(labelsValue[2].nativeElement.textContent).toContain(MOCK_USER.username);
+    expect(labelsValue[2].nativeElement.textContent).toContain(
+      MOCK_USER.username
+    );
+  });
+
+  it('should disabled button and show user-paid card class ', () => {
+    component.isPaid = true;
+    fixture.detectChanges();
+    const card = debugElement.queryAll(By.css('.user-card-paid'))[0];
+    expect(card).toBeTruthy();
+
+    const button = debugElement.queryAll(By.css('.user-card-button button'))[0];
+    expect(button.attributes.disabled).toBeTruthy();
   });
 });

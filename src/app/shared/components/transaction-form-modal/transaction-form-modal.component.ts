@@ -6,9 +6,10 @@ import {
   Validators
 } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Card } from '@core/domain/card/Card.domain';
-import { User } from '@core/domain/user/User.domain';
-import { FormControlValidatorService } from '@shared/services/form-control-validator/form-control-validator.service';
+import { Card } from '@core/domains/card/card.domain';
+import { User } from '@core/domains/user/user.domain';
+import { FormControlValidatorService } from '@core/services/form-control-validator/form-control-validator.service';
+import { TRANSACTION_FORM_VOCABULARY } from './transaction-form-modal.component.vocabulary';
 
 export interface TransactionForm {
   user: User;
@@ -26,6 +27,7 @@ export class TransactionFormModalComponent implements OnInit {
   cards: Card[];
   user: User;
   transactionForm: FormGroup;
+  vocabulary = TRANSACTION_FORM_VOCABULARY;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -37,10 +39,12 @@ export class TransactionFormModalComponent implements OnInit {
   ngOnInit() {
     this.cards = this.data.cards || [];
     this.user = this.data.user;
+
     this.transactionForm = this.formBuilder.group({
       value: [this.data.value || 0, [Validators.required, Validators.min(1)]],
       card_number: [this.data.card_number, Validators.required],
     });
+
   }
 
   onSubmit() {

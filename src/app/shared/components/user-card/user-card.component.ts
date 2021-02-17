@@ -1,5 +1,6 @@
+import { USER_CARD_VOCABULARY } from './user-card.component.vocabulary';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { User } from '@core/domain/user/User.domain';
+import { User } from '@core/domains/user/user.domain';
 
 @Component({
   selector: 'app-user-card',
@@ -7,8 +8,11 @@ import { User } from '@core/domain/user/User.domain';
   styleUrls: ['./user-card.component.scss']
 })
 export class UserCardComponent implements OnInit {
+  vocabulary = USER_CARD_VOCABULARY;
 
   @Input() user: User;
+
+  @Input() isPaid: boolean;
 
   @Output() pay: EventEmitter<User> = new EventEmitter();
 
