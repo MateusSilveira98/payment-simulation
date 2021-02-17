@@ -1,19 +1,27 @@
-import { TestBed } from '@angular/core/testing';
+import { fakeAsync, flush, TestBed } from '@angular/core/testing';
 import { ApiService } from '@core/services/api/api.service';
-import { MOCK_TRANSACTION_API_RESULT, MOCK_TRANSACTION_PAYLOAD } from '@shared/mocks/transaction/transaction.mock';
-import { of } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 import {
-  TransactionService
-} from './transaction.service';
+  MOCK_TRANSACTION,
+  MOCK_TRANSACTION_PAYLOAD,
+} from '@shared/mocks/transaction/transaction.mock';
+import { of } from 'rxjs';
+import { MOCK_INVALID_CARD } from './../../mocks/card/card.mock';
+import { TransactionService } from './transaction.service';
+import { TRANSACTION_SERVICE_VOCABULARY } from './transaction.service.vocabulary';
 
 describe('TransactionService', () => {
   let apiServiceSpy: jasmine.SpyObj<ApiService>;
   let transactionService: TransactionService;
 
+  let translateServiceSpy: jasmine.SpyObj<TranslateService>;
+
   beforeEach(() => {
     apiServiceSpy = jasmine.createSpyObj('ApiService', ['post']);
+    translateServiceSpy = jasmine.createSpyObj('TranslateService', ['instant']);
     TestBed.configureTestingModule({
       providers: [
+        { provide: TranslateService, useValue: translateServiceSpy },
         { provide: ApiService, useValue: apiServiceSpy },
         TransactionService,
       ],
@@ -22,11 +30,30 @@ describe('TransactionService', () => {
   });
 
   it('should send post transaction', () => {
-    apiServiceSpy.post.and.returnValue(of(MOCK_TRANSACTION_API_RESULT));
-    transactionService.postTransaction(MOCK_TRANSACTION_PAYLOAD).subscribe((transaction) => {
-      expect(transaction).toBeTruthy();
-      expect(typeof transaction).toBe('object');
-      expect(transaction.destination_user.id).toEqual(MOCK_TRANSACTION_PAYLOAD.destination_user_id);
-    });
+    apiServiceSpy.post.and.returnValue(of(MOCK_TRANSACTION));
+    transactionService
+      .postTransaction(MOCK_TRANSACTION_PAYLOAD)
+      .subscribe((transaction) => {
+        expect(transaction.success).toBeTruthy();
+      });
   });
+
+  it('should return invalid card error', fakeAsync(() => {
+    translateServiceSpy.instant.and.returnValue(
+      transactionService.vocabulary.invalidCard
+    );
+    transactionService
+      .verifyCard(MOCK_INVALID_CARD.card_number.toString())
+      .subscribe(
+        (success) => {
+          expect(success).toBeFalsy();
+        },
+        (err) => {
+          expect(err.status).toBeTruthy();
+          expect(err.status).toContain(
+            TRANSACTION_SERVICE_VOCABULARY.invalidCard
+          );
+        }
+      );
+  }));
 });

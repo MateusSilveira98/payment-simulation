@@ -1,6 +1,16 @@
-<section class="section">
-  <article class="container">
-    <app-user-card class="mb-4" *ngFor="let user of users$ | async" [user]="user" (pay)="openTransactionModal($event)">
-    </app-user-card>
+<section fxLayout="column" fxLayoutAlign="start" fxLayoutGap="24px">
+
+  <app-header @items class="app-header" [userFilter]="userFilter" [userFilterKeys]="userFilterKeys"
+    (filter)="filterUser($event)"></app-header>
+
+  <article fxLayout="row wrap" fxLayout.md="column" fxLayout.sm="column" fxLayout.xs="column"
+    fxLayoutAlign="space-around center" fxLayoutAlign.md="start" fxLayoutAlign.sm="start"
+    fxLayoutAlign.xs="start center">
+    <div @list *ngFor="let user of filteredUsers$ | async">
+      <app-user-card @items class="user-card" [user]="user" [isPaid]="getPaidUser(user) | async"
+        (pay)="openTransactionModal($event)">
+      </app-user-card>
+    </div>
   </article>
+
 </section>

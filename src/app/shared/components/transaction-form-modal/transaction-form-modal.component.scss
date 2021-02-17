@@ -1,3 +1,11 @@
 :host {
-  display: block;
+  .transaction-form {
+    text-transform: capitalize;
+    button {
+      text-transform: uppercase;
+    }
+    .mat-error {
+      text-transform: lowercase;
+    }
+  }
 }

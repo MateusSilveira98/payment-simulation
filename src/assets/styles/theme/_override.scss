@@ -1,0 +1,17 @@
+.theme-alternate {
+  background-color: mat-color($mat-dark-theme-background, background);
+
+  .mat-slide-toggle-content {
+    color: mat-color($mat-dark-theme-foreground, text);
+  }
+
+  .mat-card {
+    background-color: mat-color($mat-dark-theme-background, card) !important;
+    color: mat-color($mat-dark-theme-foreground, text) !important;
+  }
+
+  .mat-title,
+  .mat-subheading-2 {
+    color: mat-color($mat-dark-theme-foreground, text);
+  }
+}
