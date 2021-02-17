@@ -1,4 +1,4 @@
-# Desafio Front-end PicPay - Simulação de pagamento
+# Simulação de pagamento
 
 ## Stacks
 
